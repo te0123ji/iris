@@ -6,7 +6,9 @@ import pyperclip
 
 
 class Env(object):
+    """Env class with static method."""
+
     @staticmethod
     def get_clipboard():
-        """Return the value copied to clipboard."""
+        """Return the content copied to clipboard."""
         return pyperclip.paste()

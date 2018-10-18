@@ -21,16 +21,21 @@ logger = logging.getLogger(__name__)
 
 
 class _IrisKey(object):
+    """Class _IrisKey with the __init__() function to assign values to 'label', 'value' and 'reserved' parameters."""
+
     def __init__(self, label, value=None, reserved=True):
         self.label = label
         self.value = value
         self.is_reserved = reserved
 
     def __str__(self):
+        """Function that returns the 'label' parameter."""
         return self.label
 
 
 class Key(object):
+    """Class Key with multiple instances of the _IrisKey class and with is_lock_on() static method."""
+
     ADD = _IrisKey('add')
     ALT = _IrisKey('alt', 1 << 3)
     BACKSPACE = _IrisKey('backspace')
@@ -159,6 +164,11 @@ class Key(object):
 
     @staticmethod
     def is_lock_on(keyboard_key):
+        """Static method which determines if a keyboard key(CAPS LOCK, NUM LOCK or SCROLL LOCK) is ON.
+
+        :param keyboard_key: Keyboard key(CAPS LOCK, NUM LOCK or SCROLL LOCK).
+        :return: TRUE if keyboard_key state is ON or FALSE if keyboard_key state is OFF.
+        """
         if Settings.get_os() == Platform.WINDOWS:
             keyboard_code = 0
             hll_dll = ctypes.WinDLL("User32.dll")
@@ -220,6 +230,9 @@ class Key(object):
 
 
 class KeyModifier(object):
+    """Class KeyModifier with keyboard key variables and get_active_modifiers() static method."""
+
+    """Keyboard key variables."""
     SHIFT = Key.SHIFT.value
     CTRL = Key.CTRL.value
     CMD = Key.CMD.value
@@ -229,6 +242,11 @@ class KeyModifier(object):
 
     @staticmethod
     def get_active_modifiers(value):
+        """Gets all the active modifiers depending on the used OS.
+
+        :param value: Key modifier.
+        :return: Returns an array with all the active modifiers.
+        """
         all_modifiers = [
             Key.SHIFT,
             Key.CTRL]
@@ -343,7 +361,8 @@ def paste(text):
     :param text: Text to be pasted.
     :return: None.
     """
-    # Load text to clipboard.
+
+    """Load text to clipboard."""
     pyperclip.copy(text)
 
     text_copied = False
@@ -367,5 +386,5 @@ def paste(text):
         type(text='v', modifier=KeyModifier.CMD)
     else:
         type(text='v', modifier=KeyModifier.CTRL)
-    # Clear clipboard.
+    """Clear clipboard."""
     pyperclip.copy('')
