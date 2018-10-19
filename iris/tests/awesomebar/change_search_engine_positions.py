@@ -22,7 +22,6 @@ class Test(BaseTest):
         amazon_one_off_button_pattern = Pattern('amazon_one_off_button.png')
         bing_one_off_button_pattern = Pattern('bing_one_off_button.png')
         duck_duck_go_one_off_button_pattern = Pattern('duck_duck_go_one_off_button.png')
-        ebay_one_off_button_pattern = Pattern('ebay_one_off_button.png')
         google_one_off_button_pattern = Pattern('google_one_off_button.png')
         twitter_one_off_button_pattern = Pattern('twitter_one_off_button.png')
         wikipedia_one_off_button_pattern = Pattern('wikipedia_one_off_button.png')
@@ -39,8 +38,10 @@ class Test(BaseTest):
         paste('moz')
 
         pattern_list = [google_one_off_button_pattern, bing_one_off_button_pattern, amazon_one_off_button_pattern,
-                        duck_duck_go_one_off_button_pattern, ebay_one_off_button_pattern,
-                        twitter_one_off_button_pattern, wikipedia_one_off_button_pattern]
+                        duck_duck_go_one_off_button_pattern, twitter_one_off_button_pattern,
+                        wikipedia_one_off_button_pattern]
+
+        # Deleted assert for ebay because we no longer have the ebay search engine in place in some locations.
 
         # Check that the one-off list is displayed in the awesomebar.
         for i in range(pattern_list.__len__()):
@@ -57,8 +58,8 @@ class Test(BaseTest):
         # Wait a moment for the suggests list to fully populate before stepping down through it.
         time.sleep(Settings.UI_DELAY)
 
-        for i in range(10):
-            type(Key.DOWN)
+        repeat_key_down(10)
+        key_to_one_off_search(search_with_google_one_off_string_pattern)
 
         expected = region.exists(search_with_google_one_off_string_pattern, 10)
         assert_true(self, expected, 'The \'Google\' one-off search engine holds the first position in the one-offs '
@@ -100,19 +101,14 @@ class Test(BaseTest):
 
         # Declare a variable which can close the while loop if the pattern is not found
 
-        max_attempts = 10
-
-        while max_attempts > 0:
-            scroll_down()
-            if region.exists(search_with_google_one_off_string_pattern, 0.2):
-                max_attempts = 0
-            max_attempts -= 1
+        repeat_key_down(10)
+        key_to_one_off_search(search_with_google_one_off_string_pattern)
 
         expected = region.exists(search_with_google_one_off_string_pattern, 10)
         assert_true(self, expected, 'The \'Google\' one-off search engine still holds the first position in the '
                                     'one-offs list after reorder.')
 
-        scroll_down()
+        type(Key.DOWN)
 
         expected = region.exists(search_with_duckduckgo_one_off_string_pattern, 10)
         assert_true(self, expected, 'The \'DuckDuckGo\' one-off search engine holds the second position in the'

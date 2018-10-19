@@ -21,7 +21,6 @@ class Test(BaseTest):
         wear_theme_pattern = Pattern('wear_theme.png')
         moz_search_highlight_dark_theme_pattern = Pattern('moz_search_highlight_dark_theme.png')
         search_wikipedia_dark_theme_pattern = Pattern('search_wikipedia_dark_theme.png')
-        addon_option = HamburgerMenu.NEW_WINDOW
 
         region = Region(0, 0, SCREEN_WIDTH, 2 * SCREEN_HEIGHT / 3)
 
@@ -30,11 +29,7 @@ class Test(BaseTest):
         expected = exists(LocalWeb.FIREFOX_LOGO, 10)
         assert_true(self, expected, 'Page successfully loaded, firefox logo found.')
 
-        # click_hamburger_menu_option(addon_option)
-        click(NavBar.HAMBURGER_MENU)
-        time.sleep(10)
-
-        click(HamburgerMenu.ADDONS)
+        open_addons()
 
         expected = region.exists(themes_pattern, 10)
         assert_true(self, expected, 'Add-ons page successfully loaded.')
@@ -72,14 +67,20 @@ class Test(BaseTest):
 
         # Wait a moment for the suggests list to fully populate before stepping down through it.
         time.sleep(Settings.UI_DELAY)
-        for i in range(16):
-            scroll_down()
+
+        repeat_key_up(2)
+        key_to_one_off_search(search_wikipedia_dark_theme_pattern)
 
         expected = region.exists(search_wikipedia_dark_theme_pattern, 10)
         assert_true(self, expected, 'The \'Wikipedia\' one-off button is highlighted.')
 
-        for i in range(16):
+        max_attempts = 16
+
+        while max_attempts > 0:
             scroll_up()
+            if exists(moz_search_highlight_dark_theme_pattern, 1):
+                max_attempts = 0
+            max_attempts -= 1
 
         expected = region.exists(moz_search_highlight_dark_theme_pattern, 10)
         assert_true(self, expected, 'The searched string is highlighted.')

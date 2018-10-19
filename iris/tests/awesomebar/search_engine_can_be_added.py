@@ -24,7 +24,6 @@ class Test(BaseTest):
         amazon_one_off_button_pattern = Pattern('amazon_one_off_button.png')
         bing_one_off_button_pattern = Pattern('bing_one_off_button.png')
         duck_duck_go_one_off_button_pattern = Pattern('duck_duck_go_one_off_button.png')
-        ebay_one_off_button_pattern = Pattern('ebay_one_off_button.png')
         google_one_off_button_pattern = Pattern('google_one_off_button.png')
         twitter_one_off_button_pattern = Pattern('twitter_one_off_button.png')
         wikipedia_one_off_button_pattern = Pattern('wikipedia_one_off_button.png')
@@ -47,11 +46,19 @@ class Test(BaseTest):
 
         select_location_bar()
         paste('moz')
-        type(Key.SPACE)
 
         pattern_list = [moz_pattern, search_settings_pattern, amazon_one_off_button_pattern,
-                        bing_one_off_button_pattern, duck_duck_go_one_off_button_pattern, ebay_one_off_button_pattern,
-                        google_one_off_button_pattern, twitter_one_off_button_pattern, wikipedia_one_off_button_pattern]
+<<<<<<< HEAD:iris/tests/awesomebar/search_engine_can_be_added.py
+                        bing_one_off_button_pattern, duck_duck_go_one_off_button_pattern, google_one_off_button_pattern,
+                        twitter_one_off_button_pattern, wikipedia_one_off_button_pattern]
+
+        # Deleted assert for ebay because we no longer have the ebay search engine in some locations.
+=======
+                        bing_one_off_button_pattern, duck_duck_go_one_off_button_pattern,google_one_off_button_pattern,
+                        twitter_one_off_button_pattern, wikipedia_one_off_button_pattern]
+
+        # deleted assert for ebay because we no longer have the ebay search engine in place
+>>>>>>> ae16dd49cf324de34b229cb45ab3b62c8149e231:iris/tests/awesomebar/search_engine_can_be_added.py
 
         # Check that the default one-off list is displayed in the awesomebar.
         for i in range(pattern_list.__len__()):
@@ -77,8 +84,7 @@ class Test(BaseTest):
         click(default_search_engine_dropdown_pattern)
 
         # Change the default search engine.
-        for i in range(2):
-            type(Key.DOWN)
+        repeat_key_down(2)
 
         type(Key.ENTER)
 

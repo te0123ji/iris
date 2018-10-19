@@ -399,6 +399,25 @@ def close_customize_page():
         raise APIHelperError('Can\'t find the Done button in the page, aborting.')
 
 
+def key_to_one_off_search(highlighted_pattern, direction='left'):
+    """Iterate through the one of search engines list until the given one is highlighted.
+
+    param: highlighted_pattern: The pattern image to search for.
+    param: direction: direction to key to: right or left (default)
+    return: None.
+    """
+    max_attempts = 7
+    while max_attempts > 0:
+        if exists(highlighted_pattern, 1):
+            max_attempts = 0
+        else:
+            if direction == 'right':
+                type(Key.RIGHT)
+            else:
+                type(Key.LEFT)
+            max_attempts -= 1
+
+
 def address_crash_reporter():
     """Close the popped up crash reporter."""
     # TODO: Only works on Mac and Windows until we can get Linux images.
@@ -482,6 +501,26 @@ def open_zoom_menu():
         for i in range(2):
             type(text=Key.DOWN)
         type(text=Key.ENTER)
+
+
+def repeat_key_down(num):
+    """Repeat DOWN keystroke a given number of times.
+
+    :param num: Number of times to repeat DOWN key stroke.
+    :return: None.
+    """
+    for i in range(num):
+        type(Key.DOWN)
+
+
+def repeat_key_up(num):
+    """Repeat UP keystroke a given number of times.
+
+    :param num: Number of times to repeat UP key stroke.
+    :return: None.
+    """
+    for i in range(num):
+        type(Key.UP)
 
 
 def select_zoom_menu_option(option_number):

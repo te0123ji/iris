@@ -25,7 +25,6 @@ class Test(BaseTest):
         amazon_one_off_button_pattern = Pattern('amazon_one_off_button.png')
         bing_one_off_button_pattern = Pattern('bing_one_off_button.png')
         duck_duck_go_one_off_button_pattern = Pattern('duck_duck_go_one_off_button.png')
-        ebay_one_off_button_pattern = Pattern('ebay_one_off_button.png')
         google_one_off_button_pattern = Pattern('google_one_off_button.png')
         twitter_one_off_button_pattern = Pattern('twitter_one_off_button.png')
         wikipedia_one_off_button_pattern = Pattern('wikipedia_one_off_button.png')
@@ -41,8 +40,8 @@ class Test(BaseTest):
         paste('moz')
 
         pattern_list = [moz_pattern, search_settings_pattern, amazon_one_off_button_pattern,
-                        bing_one_off_button_pattern, duck_duck_go_one_off_button_pattern, ebay_one_off_button_pattern,
-                        google_one_off_button_pattern, twitter_one_off_button_pattern, wikipedia_one_off_button_pattern]
+                        bing_one_off_button_pattern, duck_duck_go_one_off_button_pattern, google_one_off_button_pattern,
+                        twitter_one_off_button_pattern, wikipedia_one_off_button_pattern]
 
         # Check that the one-off list is displayed in the awesomebar by default.
         for i in range(pattern_list.__len__()):
@@ -70,7 +69,7 @@ class Test(BaseTest):
         assert_true(self, expected, 'One-Click Search Engines section found.')
 
         # Uncheck all the search engines from the list.
-        for i in range(pattern_list.__len__() - 2):
+        for i in range(pattern_list.__len__() - 1):
             click(check_engine_pattern)
 
         try:

@@ -18,7 +18,7 @@ class Test(BaseTest):
     def run(self):
         search_settings_pattern = Pattern('search_settings.png')
         page_bookmarked_pattern = Pattern('page_bookmarked.png')
-        settings_gear_highlighted = Pattern('settings_gear_highlighted.png')
+        settings_gear_highlighted_pattern = Pattern('settings_gear_highlighted.png')
         search_suggestion_history_pattern = Pattern('search_suggestion_history.png')
 
         region = Region(0, 0, SCREEN_WIDTH, 2 * SCREEN_HEIGHT / 3)
@@ -60,10 +60,10 @@ class Test(BaseTest):
         # Wait a moment for the suggests list to fully populate before stepping down through it.
         time.sleep(Settings.UI_DELAY)
 
-        for i in range(17):
-            type(Key.DOWN)
+        repeat_key_down(16)
+        key_to_one_off_search(settings_gear_highlighted, "right")
 
-        expected = region.exists(settings_gear_highlighted, 10)
+        expected = region.exists(settings_gear_highlighted_pattern, 5)
         assert_true(self, expected, 'The \'Search settings\' button has focus.')
 
         expected = region.exists(search_suggestion_history_pattern, 10)

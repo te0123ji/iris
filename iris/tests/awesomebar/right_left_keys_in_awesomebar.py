@@ -35,19 +35,22 @@ class Test(BaseTest):
         time.sleep(Settings.UI_DELAY)
 
         # Without closing the autocomplete drop-down hit the arrow DOWN key until you reach the first one-off button.
-        # The search suggestion list has 10 suggestions by default.
-        for i in range(10):
-            scroll_down()
+        repeat_key_down(10)
+        key_to_one_off_search(search_with_google_one_off_string_pattern)
 
         expected = region.exists(search_with_google_one_off_string_pattern, 10)
         assert_true(self, expected, 'The search engine in focus is \'Google\'.')
 
-        # Once the first one-off is selected, hit the RIGHT arrow key until the first one-off is selected again.
+        # Once the first one-off is selected, arrow key until the first one-off is selected again.
+        repeat_key_up(14)
+        key_to_one_off_search(search_with_google_one_off_string_pattern)
 
-        for i in range(7):
-            type(Key.RIGHT)
+        expected = region.exists(search_with_google_one_off_string_pattern, 10)
+        assert_true(self, expected, 'The search engine in focus is \'Google\'.')
 
         # Make sure that the settings gear gets in focus before the first one-off is focused again.
+        type(Key.LEFT)
+
         expected = region.exists(settings_gear_highlighted_pattern, 10)
         assert_true(self, expected, 'The settings gear is in focus.')
 
@@ -56,15 +59,15 @@ class Test(BaseTest):
         expected = region.exists(search_with_google_one_off_string_pattern, 10)
         assert_true(self, expected, 'The search engine in focus is \'Google\'.')
 
-        # Once the first one-off is selected, hit the LEFT arrow key until the first one-off is selected again.
+        # Once the first one-off is selected, arrow key until the first one-off is selected again.
 
         type(Key.LEFT)
 
         expected = region.exists(settings_gear_highlighted_pattern, 10)
         assert_true(self, expected, 'The settings gear is in focus.')
 
-        for i in range(7):
-            type(Key.LEFT)
+        repeat_key_up(6)
+        key_to_one_off_search(search_with_google_one_off_string_pattern)
 
         expected = region.exists(search_with_google_one_off_string_pattern, 10)
         assert_true(self, expected, 'The search engine in focus is \'Google\'.')
